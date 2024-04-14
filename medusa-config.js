@@ -38,18 +38,17 @@ process.env.MEDUSA_ADMIN_BACKEND_URL || "http://localhost:9000";
 
 // CORS to avoid issues when consuming Medusa from a client
 const STORE_CORS = process.env.STORE_CORS || "http://localhost:8000";
-// const DATABASE_URL =
-//   process.env.DATABASE_URL || "postgres://kcat:test@localhost:5432/medusa-starter-default";
 const DB_USERNAME = process.env.DB_USERNAME
 const DB_PASSWORD = process.env.DB_PASSWORD
 const DB_HOST = process.env.DB_HOST
 const DB_PORT = process.env.DB_PORT
 const DB_DATABASE = process.env.DB_DATABASE
+const DB_SSL = process.env.DB_SSL
 
-// const DATABASE_URL = 
-//   `postgres://${DB_USERNAME}:${DB_PASSWORD}` + 
-//   `@${DB_HOST}:${DB_PORT}/${DB_DATABASE}`
-const DATABASE_URL = "postgresql://medusa-starter-default:AVNS_rUiIp0VUYm-9mNwbRXx@app-d53fbc14-a533-4750-b328-f2e3c05bb217-do-user-15872751-0.c.db.ondigitalocean.com:25060/medusa-starter-default?sslmode=require"
+const DATABASE_URL = 
+   `postgres://${DB_USERNAME}:${DB_PASSWORD}` + 
+   `@${DB_HOST}:${DB_PORT}/${DB_DATABASE}?ssl=${DB_SSL}`
+// const DATABASE_URL = "postgresql://medusa-starter-default:AVNS_rUiIp0VUYm-9mNwbRXx@app-d53fbc14-a533-4750-b328-f2e3c05bb217-do-user-15872751-0.c.db.ondigitalocean.com:25060/medusa-starter-default?sslmode=require"
 
 const REDIS_URL = process.env.REDIS_URL || "redis://localhost:6379";
 

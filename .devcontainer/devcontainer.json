@@ -4,7 +4,9 @@
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "app",
 	"workspaceFolder": "/workspace",
-
+	"remoteEnv": {
+		"NODE_TLS_REJECT_UNAUTHORIZED": "0"
+	},
 	// Configure tool-specific properties.
 	"customizations": {
 		// Configure properties specific to VS Code.
@@ -33,6 +35,6 @@
 	},
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": ["npm install @medusajs/medusa-cli -g","medusa migrations run", "medusa seed --seed-file=data/seed.json", "medusa start"],
+	"postCreateCommand": "npm i && npm i @medusajs/medusa-cli -g && medusa migrations run",
 	"remoteUser": "node"
 }
