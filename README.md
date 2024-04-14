@@ -7,6 +7,8 @@ npm install
 
 npm install @medusajs/medusa-cli -g
 
+!!! dev only: export NODE_TLS_REJECT_UNAUTHORIZED='0'
+
 medusa migrations run
 
 medusa seed --seed-file=data/seed.json
