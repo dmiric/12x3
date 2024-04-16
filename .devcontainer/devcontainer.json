@@ -16,7 +16,8 @@
 				"dbaeumer.vscode-eslint",
 				"ms-azuretools.vscode-docker",
 				"bajdzis.vscode-database",
-				"ms-ossdata.vscode-postgresql"
+				"ms-ossdata.vscode-postgresql",
+				"cweijan.vscode-database-client2"
 			]
 		}
 	},

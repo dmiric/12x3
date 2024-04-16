@@ -73,13 +73,13 @@ const plugins = [
       path: "/app",
       outDir: "build",
       develop: {
-        open: true,
         port: 7001,
         logLevel: "error",
         stats: "normal",
         allowedHosts: "all",
         webSocketURL: undefined,
-        open: process.env.OPEN_BROWSER !== "false",
+        //open: process.env.OPEN_BROWSER !== "false",
+        open: false
       },
     },
   }

@@ -8,7 +8,9 @@ to add seed data for development:
 
 run commands for development:
  - medusa develop in one terminal
- - npm run dev:admin to start admin UI 
+ - npm run dev:admin to start admin UI
+
+Need to set both 7007 and 9000 ports to public to use in codespaces.
 
 medusa start (for development on codespace or production)
 
