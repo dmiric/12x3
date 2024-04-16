@@ -68,9 +68,8 @@ const plugins = [
     options: {
       autoRebuild: true,
       // serve: process.env.NODE_ENV === "development",
-      serve: true,
-      autoRebuild: true,
-      backend: "https://seal-app-aqdpj.ondigitalocean.app",
+      serve: false,
+      backend: MEDUSA_BACKEND_URL,
       path: "/app",
       outDir: "build",
       develop: {
@@ -78,7 +77,7 @@ const plugins = [
         port: 7001,
         logLevel: "error",
         stats: "normal",
-        allowedHosts: "auto",
+        allowedHosts: "all",
         webSocketURL: undefined,
         open: process.env.OPEN_BROWSER !== "false",
       },
@@ -114,6 +113,8 @@ const projectConfig = {
   // Uncomment the following lines to enable REDIS
   // redis_url: REDIS_URL
 };
+
+console.log(ADMIN_CORS)
 
 /** @type {import('@medusajs/medusa').ConfigModule} */
 module.exports = {

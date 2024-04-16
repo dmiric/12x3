@@ -1,19 +1,14 @@
 # Installation Guide
 Create codespace from repository.
 
-After container for codespace is built, run the following command.
+After container for codespace is built, run the following commands.
 
-npm install
+to add seed data for development:
+ - medusa seed --seed-file=data/seed.json
 
-npm install @medusajs/medusa-cli -g
-
-!!! dev only: export NODE_TLS_REJECT_UNAUTHORIZED='0'
-
-medusa migrations run
-
-medusa seed --seed-file=data/seed.json
-
-medusa develop (for development on local)
+run commands for development:
+ - medusa develop in one terminal
+ - npm run dev:admin to start admin UI 
 
 medusa start (for development on codespace or production)
 

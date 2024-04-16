@@ -23,7 +23,9 @@
     "seed": "cross-env medusa seed -f ./data/seed.json",
     "start": "medusa migrations run && medusa start",
     "start:custom": "cross-env npm run build && node --preserve-symlinks --trace-warnings index.js",
-    "dev": "cross-env npm run build:server && medusa develop"
+    "dev": "cross-env npm run build:server && medusa develop",
+    "dev:admin": "medusa-admin develop --backend https://glowing-invention-694j4gvrgj24pgr-9000.app.github.dev --port 7007",
+    "deploy:admin": "medusa-admin build --deployment"
   },
   "dependencies": {
     "@medusajs/admin": "7.1.11",
