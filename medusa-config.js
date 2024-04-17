@@ -70,7 +70,7 @@ const plugins = [
       // serve: process.env.NODE_ENV === "development",
       serve: false,
       backend: MEDUSA_BACKEND_URL,
-      path: "/app",
+      path: "/",
       outDir: "build",
       develop: {
         port: 7001,
