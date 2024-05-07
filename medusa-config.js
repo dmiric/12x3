@@ -49,12 +49,12 @@ const DB_PORT = process.env.DB_PORT
 const DB_DATABASE = process.env.DB_DATABASE
 const DB_SSL = process.env.DB_SSL
 
-const DATABASE_URL = 
+let DATABASE_URL = 
    `postgres://${DB_USERNAME}:${DB_PASSWORD}` + 
    `@${DB_HOST}:${DB_PORT}/${DB_DATABASE}?ssl=${DB_SSL}`
 if(process.env.NODE_ENV == 'production') {
   // if we are working in production this overriedes DATABASE_URL set beforehand
-  const DATABASE_URL = process.env.DB_URL
+  DATABASE_URL = process.env.DB_URL
 }
 
 const REDIS_URL = process.env.REDIS_URL || "redis://localhost:6379";
