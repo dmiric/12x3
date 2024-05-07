@@ -24,7 +24,7 @@ switch (process.env.NODE_ENV) {
 }
 
 try {
-  if(process.env.NODE_ENV != 'production') {
+  if(process.env.NODE_ENV !== 'production') {
     dotenv.config({ path: process.cwd() + "/" + ENV_FILE_NAME });
   }
 } catch (e) {}
@@ -52,7 +52,7 @@ const DB_SSL = process.env.DB_SSL
 let DATABASE_URL = 
    `postgres://${DB_USERNAME}:${DB_PASSWORD}` + 
    `@${DB_HOST}:${DB_PORT}/${DB_DATABASE}?ssl=${DB_SSL}`
-if(process.env.NODE_ENV == 'production') {
+if(process.env.NODE_ENV === 'production') {
   // if we are working in production this overriedes DATABASE_URL set beforehand
   DATABASE_URL = process.env.DB_URL
 }
@@ -74,7 +74,7 @@ const plugins = [
     /** @type {import('@medusajs/admin').PluginOptions} */
     options: {
       autoRebuild: true,
-      // serve: process.env.NODE_ENV === "development",
+      serve: process.env.NODE_ENV === "production",
       serve: false,
       backend: MEDUSA_BACKEND_URL,
       path: "/",
