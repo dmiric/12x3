@@ -75,7 +75,6 @@ const plugins = [
     options: {
       autoRebuild: true,
       serve: process.env.NODE_ENV === "production",
-      serve: false,
       backend: MEDUSA_BACKEND_URL,
       path: "/",
       outDir: "build",
