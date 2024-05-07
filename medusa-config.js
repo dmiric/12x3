@@ -1,6 +1,6 @@
 const dotenv = require("dotenv");
 
-let ENV_FILE_NAME = "";
+let ENV_FILE_NAME;
 console.log('Node ENV', process.env.NODE_ENV)
 switch (process.env.NODE_ENV) {
   case "production":
@@ -24,7 +24,7 @@ switch (process.env.NODE_ENV) {
 }
 
 try {
-  if(!ENV_FILE_NAME) {
+  if(process.env.NODE_ENV != 'production') {
     dotenv.config({ path: process.cwd() + "/" + ENV_FILE_NAME });
   }
 } catch (e) {}
@@ -50,9 +50,10 @@ const DB_SSL = process.env.DB_SSL
 const DATABASE_URL = 
    `postgres://${DB_USERNAME}:${DB_PASSWORD}` + 
    `@${DB_HOST}:${DB_PORT}/${DB_DATABASE}?ssl=${DB_SSL}`
-if(!ENV_FILE_NAME) {
+if(process.env.NODE_ENV != 'production') {
   const DATABASE_URL = process.env.DB_URL
 }
+console.log(DATABASE_URL);
 
 const REDIS_URL = process.env.REDIS_URL || "redis://localhost:6379";
 
@@ -112,10 +113,13 @@ const projectConfig = {
   database_url: DATABASE_URL,
   admin_cors: ADMIN_CORS,
   database_extra: { ssl: { rejectUnauthorized: false } },
-  redis_url: process.env.REDIS_URL,
 };
 
-console.log(ADMIN_CORS)
+if(process.env.NODE_ENV == 'production') {
+  projectConfig.redis_url = process.env.REDIS_URL
+}
+
+console.log(projectConfig)
 
 /** @type {import('@medusajs/medusa').ConfigModule} */
 module.exports = {
