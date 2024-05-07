@@ -24,7 +24,9 @@ switch (process.env.NODE_ENV) {
 }
 
 try {
-  dotenv.config({ path: process.cwd() + "/" + ENV_FILE_NAME });
+  if(!ENV_FILE_NAME) {
+    dotenv.config({ path: process.cwd() + "/" + ENV_FILE_NAME });
+  }
 } catch (e) {}
 
 // CORS when consuming Medusa from admin
@@ -48,7 +50,9 @@ const DB_SSL = process.env.DB_SSL
 const DATABASE_URL = 
    `postgres://${DB_USERNAME}:${DB_PASSWORD}` + 
    `@${DB_HOST}:${DB_PORT}/${DB_DATABASE}?ssl=${DB_SSL}`
-// const DATABASE_URL = "postgresql://medusa-starter-default:AVNS_rUiIp0VUYm-9mNwbRXx@app-d53fbc14-a533-4750-b328-f2e3c05bb217-do-user-15872751-0.c.db.ondigitalocean.com:25060/medusa-starter-default?sslmode=require"
+if(!ENV_FILE_NAME) {
+  const DATABASE_URL = process.env.DB_URL
+}
 
 const REDIS_URL = process.env.REDIS_URL || "redis://localhost:6379";
 
@@ -86,7 +90,7 @@ const plugins = [
 ];
 
 const modules = {
-  /*eventBus: {
+   eventBus: {
     resolve: "@medusajs/event-bus-redis",
     options: {
       redisUrl: REDIS_URL
@@ -97,7 +101,7 @@ const modules = {
     options: {
       redisUrl: REDIS_URL
     }
-  },*/
+  },
 };
 
 /** @type {import('@medusajs/medusa').ConfigModule["projectConfig"]} */
@@ -109,9 +113,6 @@ const projectConfig = {
   admin_cors: ADMIN_CORS,
   database_extra: { ssl: { rejectUnauthorized: false } },
   redis_url: process.env.REDIS_URL,
-
-  // Uncomment the following lines to enable REDIS
-  // redis_url: REDIS_URL
 };
 
 console.log(ADMIN_CORS)
