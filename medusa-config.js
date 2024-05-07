@@ -122,6 +122,7 @@ if(process.env.NODE_ENV == 'production') {
 }
 
 console.log(projectConfig)
+console.log("test redeploy")
 
 /** @type {import('@medusajs/medusa').ConfigModule} */
 module.exports = {
