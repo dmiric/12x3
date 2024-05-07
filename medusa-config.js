@@ -40,6 +40,8 @@ process.env.MEDUSA_ADMIN_BACKEND_URL || "http://localhost:9000";
 
 // CORS to avoid issues when consuming Medusa from a client
 const STORE_CORS = process.env.STORE_CORS || "http://localhost:8000";
+
+
 const DB_USERNAME = process.env.DB_USERNAME
 const DB_PASSWORD = process.env.DB_PASSWORD
 const DB_HOST = process.env.DB_HOST
@@ -50,10 +52,10 @@ const DB_SSL = process.env.DB_SSL
 const DATABASE_URL = 
    `postgres://${DB_USERNAME}:${DB_PASSWORD}` + 
    `@${DB_HOST}:${DB_PORT}/${DB_DATABASE}?ssl=${DB_SSL}`
-if(process.env.NODE_ENV != 'production') {
+if(process.env.NODE_ENV == 'production') {
+  // if we are working in production this overriedes DATABASE_URL set beforehand
   const DATABASE_URL = process.env.DB_URL
 }
-console.log(DATABASE_URL);
 
 const REDIS_URL = process.env.REDIS_URL || "redis://localhost:6379";
 
