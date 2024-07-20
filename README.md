@@ -1,6 +1,6 @@
 # Installation Guide
 
-Fork This REPO.
+Fork This REPO...
 
 Create codespace from repository.
 
