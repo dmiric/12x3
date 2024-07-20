@@ -25,6 +25,22 @@ terraform {
   }
 }
 
+variable "upstash_email" {
+  type = string
+}
+
+variable "upstash_api_key" {
+  type = string
+}
+
+variable "render_api_key" {
+  type = string
+}
+
+variable "render_owner_id" {
+  type = string
+}
+
 provider "render" {
   api_key = var.render_api_key    // Uses env.RENDER_API_KEY, if not supplied
   owner_id = var.render_owner_id // Uses env.RENDER_EMAIL, if not supplied
