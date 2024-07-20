@@ -22,9 +22,9 @@ jobs:
         run: terraform init
 
       - name: Terraform Plan
-        run: terraform plan -var "upstash_email=${{ secrets.UPSTASH_EMAIL }}" -var "upstash_api_key=${{ secrets.UPSTASH_API_KEY }}" -var "render_api_key=${{ secrets.RENDER_API_KEY }}" -var "render_owner_id=${{ secrets.RENDER_OWNER_ID }}"
+        run: terraform plan -var "upstash_email=${{ secrets.UPSTASH_EMAIL }}" -var "upstash_api_key=${{ secrets.UPSTASH_API_KEY }}" -var "render_api_key=${{ secrets.RENDER_API_KEY }}" -var "render_owner_id=${{ secrets.RENDER_OWNER_ID }}" -var "neon_api_key=${{secrets.NEON_API_KEY}}"
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main'  # Only apply on the main branch
-        run: terraform apply -auto-approve -var "upstash_email=${{ secrets.UPSTASH_EMAIL }}" -var "upstash_api_key=${{ secrets.UPSTASH_API_KEY }}" -var "render_api_key=${{ secrets.RENDER_API_KEY }}" -var "render_owner_id=${{ secrets.RENDER_OWNER_ID }}"
+        run: terraform apply -auto-approve -var "upstash_email=${{ secrets.UPSTASH_EMAIL }}" -var "upstash_api_key=${{ secrets.UPSTASH_API_KEY }}" -var "render_api_key=${{ secrets.RENDER_API_KEY }}" -var "render_owner_id=${{ secrets.RENDER_OWNER_ID }}" -var "neon_api_key=${{secrets.NEON_API_KEY}}"
 

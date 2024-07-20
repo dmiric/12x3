@@ -56,37 +56,37 @@ output "redis_url_concat" {
 
 ## DATABASE
 
-# resource "neon_project" "db" {
-#   name = "medusa"
-# }
+resource "neon_project" "db" {
+  name = "medusa"
+}
 
-# resource "neon_endpoint" "db" {
-#   project_id = neon_project.db.id
-#   branch_id  = neon_branch.db.id
+resource "neon_endpoint" "db" {
+  project_id = neon_project.db.id
+  branch_id  = neon_branch.db.id
 
-#   autoscaling_limit_min_cu = 0.25
-#   autoscaling_limit_max_cu = 1
-#   suspend_timeout_seconds  = 10
-# }
+  autoscaling_limit_min_cu = 0.25
+  autoscaling_limit_max_cu = 1
+  suspend_timeout_seconds  = 10
+}
 
-# resource "neon_branch" "db" {
-#   project_id = neon_project.db.id
-#   parent_id  = neon_project.db.default_branch_id
-#   name       = "main"
-# }
+resource "neon_branch" "db" {
+  project_id = neon_project.db.id
+  parent_id  = neon_project.db.default_branch_id
+  name       = "main"
+}
 
-# resource "neon_role" "db" {
-#   project_id = neon_project.db.id
-#   branch_id  = neon_branch.db.id
-#   name       = "owner"
-# }
+resource "neon_role" "db" {
+  project_id = neon_project.db.id
+  branch_id  = neon_branch.db.id
+  name       = "owner"
+}
 
-# resource "neon_database" "db" {
-#   project_id = neon_project.db.id
-#   branch_id  = neon_branch.db.id
-#   owner_name = neon_role.db.name
-#   name       = "db"
-# }
+resource "neon_database" "db" {
+  project_id = neon_project.db.id
+  branch_id  = neon_branch.db.id
+  owner_name = neon_role.db.name
+  name       = "db"
+}
 
 ## BACKEND DEPLOY
 
