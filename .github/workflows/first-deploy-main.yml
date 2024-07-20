@@ -22,14 +22,9 @@ jobs:
         run: terraform init
 
       - name: Terraform Plan
-        run: terraform plan
+        run: terraform plan -var "upstash_email=${{ secrets.UPSTASH_EMAIL }}" -var "upstash_api_key=${{ secrets.UPSTASH_API_KEY }}" -var "render_api_key=${{ secrets.RENDER_API_KEY }}" -var "render_owner_id=${{ secrets.RENDER_OWNER_ID }}"
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main'  # Only apply on the main branch
-        run: terraform apply -auto-approve
-        env:
-          UPSTASH_EMAIL: ${{ secrets.UPSTASH_EMAIL }}
-          UPSTASH_PASSWORD: ${{ secrets.UPSTASH_API_KEY }}
-          RENDER_OWNER_ID: ${{ secrets.RENDER_OWNER_ID }}
-          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+        run: terraform apply -auto-approve -var "upstash_email=${{ secrets.UPSTASH_EMAIL }}" -var "upstash_api_key=${{ secrets.UPSTASH_API_KEY }}" -var "render_api_key=${{ secrets.RENDER_API_KEY }}" -var "render_owner_id=${{ secrets.RENDER_OWNER_ID }}"
 
