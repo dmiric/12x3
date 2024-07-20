@@ -78,6 +78,7 @@ output "redis_url_concat" {
 
 resource "neon_project" "db" {
   name = "medusa"
+  requested_history_retention_seconds = 8000
 }
 
 resource "neon_endpoint" "db" {
