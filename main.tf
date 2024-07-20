@@ -26,16 +26,16 @@ terraform {
 }
 
 provider "render" {
-  api_key = "${ secrets.RENDER_API_KEY }"    // Uses env.RENDER_API_KEY, if not supplied
-  owner_id = "${ secrets.RENDER_OWNER_ID }" // Uses env.RENDER_EMAIL, if not supplied
+  api_key = var.render_api_key    // Uses env.RENDER_API_KEY, if not supplied
+  owner_id = var.render_owner_id // Uses env.RENDER_EMAIL, if not supplied
 }
 
 provider "neon" {}
 provider "random" {}
 
 provider "upstash" {
-  email = "${ secrets.UPSTASH_EMAIL }"
-  api_key  = "${ secrets.UPSTASH_API_KEY }"
+  email = var.upstash_email
+  api_key  = var.upstash_api_key
 }
 
 ## REDIS
