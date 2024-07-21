@@ -105,7 +105,7 @@ resource "neon_database" "db" {
   branch_id  = neon_branch.db.id
   owner_name = neon_role.db.name
   name       = "db"
-requested_history_retention_seconds: 30
+  requested_history_retention_seconds = 30
 }
 
 ## BACKEND DEPLOY
