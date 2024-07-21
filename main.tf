@@ -8,6 +8,16 @@ terraform {
     }
   }
 
+variable "terraform_credentials" {
+  type = string
+}
+
+credentials "app.terraform.io" {
+  token = var.terraform_credentials
+}
+
+
+
   required_providers {
     neon = {
       source = "terraform-community-providers/neon"
