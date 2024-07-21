@@ -25,9 +25,9 @@ jobs:
 #        run: terraform destroy
 
       - name: Terraform Plan
-        run: terraform plan -var "upstash_email=${{ secrets.UPSTASH_EMAIL }}" -var "upstash_api_key=${{ secrets.UPSTASH_API_KEY }}" -var "render_api_key=${{ secrets.RENDER_API_KEY }}" -var "render_owner_id=${{ secrets.RENDER_OWNER_ID }}" -var "neon_api_key=${{secrets.NEON_API_KEY}}"
+        run: terraform plan -var "upstash_email=${{ secrets.UPSTASH_EMAIL }}" -var "upstash_api_key=${{ secrets.UPSTASH_API_KEY }}" -var "render_api_key=${{ secrets.RENDER_API_KEY }}" -var "render_owner_id=${{ secrets.RENDER_OWNER_ID }}" -var "neon_api_key=${{secrets.NEON_API_KEY}}" -var "terraform_credentials=${{TERRAFORM_TOKEN}}"
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main'  # Only apply on the main branch
-        run: terraform apply -auto-approve -var "upstash_email=${{ secrets.UPSTASH_EMAIL }}" -var "upstash_api_key=${{ secrets.UPSTASH_API_KEY }}" -var "render_api_key=${{ secrets.RENDER_API_KEY }}" -var "render_owner_id=${{ secrets.RENDER_OWNER_ID }}" -var "neon_api_key=${{secrets.NEON_API_KEY}}"
+        run: terraform apply -auto-approve -var "upstash_email=${{ secrets.UPSTASH_EMAIL }}" -var "upstash_api_key=${{ secrets.UPSTASH_API_KEY }}" -var "render_api_key=${{ secrets.RENDER_API_KEY }}" -var "render_owner_id=${{ secrets.RENDER_OWNER_ID }}" -var "neon_api_key=${{secrets.NEON_API_KEY}}" -var "terraform_credentials=${{TERRAFORM_TOKEN}}"
 
