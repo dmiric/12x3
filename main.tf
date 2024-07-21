@@ -51,6 +51,7 @@ cloud {
     workspaces {
       name = "medusa"
 }
+}
 
 variable "terraform_credentials" {
   type = string
