@@ -105,7 +105,7 @@ resource "neon_database" "db" {
   name       = "db"
 }
 
-## BACKEND DEPLOY
+### BACKEND DEPLOY
 
 # resource "random_string" "JWT_SECRET" {
 #   length  = 32
