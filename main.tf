@@ -1,23 +1,5 @@
 terraform {
 
-terraform {
-  cloud {
-    organization = "DMTIT"
-    workspaces {
-      name = "medusa"
-    }
-  }
-
-variable "terraform_credentials" {
-  type = string
-}
-
-credentials "app.terraform.io" {
-  token = var.terraform_credentials
-}
-
-
-
   required_providers {
     neon = {
       source = "terraform-community-providers/neon"
@@ -62,6 +44,20 @@ variable "render_owner_id" {
 
 variable "neon_api_key" {
   type = string
+}
+
+cloud {
+    organization = "DMTIT"
+    workspaces {
+      name = "medusa"
+}
+
+variable "terraform_credentials" {
+  type = string
+}
+
+credentials "app.terraform.io" {
+  token = var.terraform_credentials
 }
 
 provider "render" {
