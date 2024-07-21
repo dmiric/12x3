@@ -78,7 +78,7 @@ output "redis_url_concat" {
 
 resource "neon_project" "db" {
   name = "medusa"
-  region = "aws-eu-central-1"
+  region_id = "aws-eu-central-1"
 }
 
 resource "neon_endpoint" "db" {
