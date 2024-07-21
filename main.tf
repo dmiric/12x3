@@ -99,7 +99,7 @@ resource "neon_role" "db" {
 }
 
 resource "neon_database" "db" {
-  owner_name = neon_role.db.role.name
+  owner_name = neon_role.db.name
   branch_id  = neon_project.db.branch.id
   project_id = neon_project.db.id
   name       = "db"
