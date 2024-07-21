@@ -1,4 +1,13 @@
 terraform {
+
+terraform {
+  cloud {
+    organization = "DMTIT"
+    workspaces {
+      name = "medusa"
+    }
+  }
+
   required_providers {
     neon = {
       source = "terraform-community-providers/neon"
