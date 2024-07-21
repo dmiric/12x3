@@ -19,7 +19,7 @@ jobs:
           terraform_version: 1.9.2
       
       - name: Terraform login
-        run: terraform login 
+        run: terraform login -auto-approve
 
       - name: Terraform Init
         run: terraform init
