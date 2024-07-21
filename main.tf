@@ -1,7 +1,8 @@
 terraform {
   required_providers {
     neon = {
-      source  = "kislerdm/neon"
+      source = "terraform-community-providers/neon"
+      version = "0.1.6"
     }
 
     neosync = {
@@ -50,7 +51,7 @@ provider "render" {
 }
 
 provider "neon" {
-    api_key= var.neon_api_key
+    token = var.neon_api_key
 }
 
 provider "random" {}
@@ -77,35 +78,31 @@ output "redis_url_concat" {
 
 resource "neon_project" "db" {
   name = "medusa"
+  region = "aws-eu-central-1"
 }
 
 resource "neon_endpoint" "db" {
+  branch_id  = neon_project.db.branch.id
   project_id = neon_project.db.id
-  branch_id  = neon_branch.db.id
-
-  autoscaling_limit_min_cu = 0.25
-  autoscaling_limit_max_cu = 1
-  suspend_timeout_seconds  = 10
 }
 
 resource "neon_branch" "db" {
+  parent_id  = neon_project.db.branch.id
   project_id = neon_project.db.id
-  parent_id  = neon_project.db.default_branch_id
   name       = "main"
 }
 
 resource "neon_role" "db" {
+  branch_id  = neon_project.db.branch.id
   project_id = neon_project.db.id
-  branch_id  = neon_branch.db.id
   name       = "owner"
 }
 
 resource "neon_database" "db" {
+  owner_name = neon_role.db.role.name
+  branch_id  = neon_project.db.branch.id
   project_id = neon_project.db.id
-  branch_id  = neon_branch.db.id
-  owner_name = neon_role.db.name
   name       = "db"
-  requested_history_retention_seconds = 30
 }
 
 ## BACKEND DEPLOY
@@ -170,8 +167,8 @@ resource "neon_database" "db" {
 # #     "file2" = { content = "content2" },
 # #   }
 # #   custom_domains = [
-# #     { name : "terraform-provider-1.example.com" },
-# #     { name : "terraform-provider-2.example.com" },
+# #     { name : "terraform-provider-1.db.com" },
+# #     { name : "terraform-provider-2.db.com" },
 # #   ]
 
 # #   notification_override = {
