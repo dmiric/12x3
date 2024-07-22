@@ -9,17 +9,18 @@
 name: HCP Terraform Speculative Run
 
 on:
-  pull_request:
+  #pull_request:
+  push:
     branches:
     ## RECOMMENDED: Change for your target branch, or include branches you wish to trigger this workflow file.
       - main
     ## RECOMMENDED: Specify to only run this workflow file when terraform configuration has changed.
-    paths:
-      - "terraform/**.tf" ## Example: 'terraform/**.tf'
+    #paths:
+    #  - "terraform/**.tf" ## Example: 'terraform/**.tf'
 
 ## Add shared Environment Variables across jobs here ##
 env:
-  TF_CLOUD_ORGANIZATION: "${{ vars.TF_CLOUD_ORGANIZATION }}" ## Name of your existing HCP Terraform Organization. RECOMMENDED: use repository variables. ex. "${{ vars.TF_CLOUD_ORGANIZATION }}"
+  TF_CLOUD_ORGANIZATION: "${{ secrets.TF_CLOUD_ORGANIZATION }}" ## Name of your existing HCP Terraform Organization. RECOMMENDED: use repository variables. ex. "${{ vars.TF_CLOUD_ORGANIZATION }}"
   TF_API_TOKEN: "${{ secrets.TERRAFORM_TOKEN }}" ## HCP Terraform API Token. RECOMMENDED: replace with github action secrets. ex. "${{ secrets.TF_API_TOKEN }}"
   TF_WORKSPACE: "medusa" ## Name of your existing workspace in HCP Terraform.
   CONFIG_DIRECTORY: "terraform" ## Directory of your Terraform Configuration. Relative to the project root.
