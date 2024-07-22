@@ -9,7 +9,7 @@
 name: HCP Terraform Speculative Run
 
 on:
-  ##pull_request:
+  ###pull_request:
   push:
     branches:
     ## RECOMMENDED: Change for your target branch, or include branches you wish to trigger this workflow file.
@@ -31,7 +31,7 @@ env:
   TF_VAR_upstash_api_key: "${{ secrets.UPSTASH_API_KEY }}"
   TF_VAR_render_api_key: "${{ secrets.RENDER_API_KEY }}"
   TF_VAR_render_owner_id: "${{ secrets.RENDER_OWNER_ID }}"
-  TF_VAR_neon_api_key: "${{secrets.NEON_API_KEY}}"
+  TF_VAR_neon_api_key: "${{ secrets.NEON_API_KEY }}"
 
 jobs:
   terraform-cloud-speculative-run:
