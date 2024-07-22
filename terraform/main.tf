@@ -1,5 +1,4 @@
 terraform {
-
   required_providers {
     neon = {
       source = "terraform-community-providers/neon"
@@ -26,41 +25,6 @@ terraform {
   }
 }
 
-variable "upstash_email" {
-  type = string
-}
-
-variable "upstash_api_key" {
-  type = string
-}
-
-variable "render_api_key" {
-  type = string
-}
-
-variable "render_owner_id" {
-  type = string
-}
-
-variable "neon_api_key" {
-  type = string
-}
-
-cloud {
-    organization = "DMTIT"
-    workspaces {
-      name = "medusa"
-}
-}
-
-variable "terraform_credentials" {
-  type = string
-}
-
-credentials "app.terraform.io" {
-  token = var.terraform_credentials
-}
-
 provider "render" {
   api_key = var.render_api_key    // Uses env.RENDER_API_KEY, if not supplied
   owner_id = var.render_owner_id // Uses env.RENDER_EMAIL, if not supplied
@@ -80,46 +44,47 @@ provider "upstash" {
 ## REDIS
 
 resource "upstash_redis_database" "redis" {
-  database_name = "Medusa 1"
-  region = "eu-west-1"
-  tls = "true"
+   database_name = "Medusa 1"
+   region = "eu-west-1"
+   tls = "true"
+ }
+
+output "test" {
+  value = "${var.upstash_email}"
 }
 
-output "redis_url_concat" {
-  value = "redis://default:${upstash_redis_database.redis.password}${upstash_redis_database.redis.endpoint}:${upstash_redis_database.redis.port}"
-  sensitive = true
-}
+#value = "redis://default:${upstash_redis_database.redis.password}${upstash_redis_database.redis.endpoint}:${upstash_redis_database.redis.port}"
 
-## DATABASE
+# ## DATABASE
 
-resource "neon_project" "db" {
-  name = "medusa 2"
-  region_id = "aws-eu-central-1"
-}
+# resource "neon_project" "db" {
+#   name = "medusa 2"
+#   region_id = "aws-eu-central-1"
+# }
 
-resource "neon_endpoint" "db" {
-  branch_id  = neon_project.db.branch.id
-  project_id = neon_project.db.id
-}
+# resource "neon_endpoint" "db" {
+#   branch_id  = neon_project.db.branch.id
+#   project_id = neon_project.db.id
+# }
 
-resource "neon_branch" "db" {
-  parent_id  = neon_project.db.branch.id
-  project_id = neon_project.db.id
-  name       = "main"
-}
+# resource "neon_branch" "db" {
+#   parent_id  = neon_project.db.branch.id
+#   project_id = neon_project.db.id
+#   name       = "main"
+# }
 
-resource "neon_role" "db" {
-  branch_id  = neon_project.db.branch.id
-  project_id = neon_project.db.id
-  name       = "owner"
-}
+# resource "neon_role" "db" {
+#   branch_id  = neon_project.db.branch.id
+#   project_id = neon_project.db.id
+#   name       = "owner"
+# }
 
-resource "neon_database" "db" {
-  owner_name = neon_role.db.name
-  branch_id  = neon_project.db.branch.id
-  project_id = neon_project.db.id
-  name       = "db"
-}
+# resource "neon_database" "db" {
+#   owner_name = neon_role.db.name
+#   branch_id  = neon_project.db.branch.id
+#   project_id = neon_project.db.id
+#   name       = "db"
+# }
 
 ### BACKEND DEPLOY
 
