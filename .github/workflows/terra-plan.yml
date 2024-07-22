@@ -27,11 +27,11 @@ env:
   ## Additional env variables
   # TF_LOG: DEBUG ## Helpful for troubleshooting
   # TF_MAX_TIMEOUT: "30m" ## If you wish to override the default "1h"
-  TF_upstash_email: "${{ secrets.UPSTASH_EMAIL }}"
-  TF_upstash_api_key: "${{ secrets.UPSTASH_API_KEY }}"
-  TF_render_api_key: "${{ secrets.RENDER_API_KEY }}"
-  TF_render_owner_id: "${{ secrets.RENDER_OWNER_ID }}"
-  TF_neon_api_key: "${{secrets.NEON_API_KEY}}"
+  TF_VAR_upstash_email: "${{ secrets.UPSTASH_EMAIL }}"
+  TF_VAR_upstash_api_key: "${{ secrets.UPSTASH_API_KEY }}"
+  TF_VAR_render_api_key: "${{ secrets.RENDER_API_KEY }}"
+  TF_VAR_render_owner_id: "${{ secrets.RENDER_OWNER_ID }}"
+  TF_VAR_neon_api_key: "${{secrets.NEON_API_KEY}}"
 
 jobs:
   terraform-cloud-speculative-run:
