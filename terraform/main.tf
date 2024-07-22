@@ -31,14 +31,14 @@ provider "render" {
 }
 
 provider "neon" {
-    token = var.neon_api_key
+  token = var.neon_api_key
 }
 
 provider "random" {}
 
 provider "upstash" {
   email = var.upstash_email
-  api_key  = var.upstash_api_key
+  api_key = var.upstash_api_key
 }
 
 ## REDIS
