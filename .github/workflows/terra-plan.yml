@@ -35,11 +35,11 @@ jobs:
     ## OPTIONAL: can scope variables to this specific job
     ## Example:
     env:
-      TF_VAR_upstash_email: "$${{ secrets.UPSTASH_EMAIL }}"
-      TF_VAR_upstash_api_key: "$${{ secrets.UPSTASH_API_KEY }}"
-      TF_VAR_render_api_key: "${{ secrets.RENDER_API_KEY }}"
-      TF_VAR_render_owner_id: "${{ secrets.RENDER_OWNER_ID }}"
-      TF_VAR_neon_api_key: "$${{ secrets.NEON_API_KEY }}"
+      TF_VAR_upstash_email: ${{ secrets.UPSTASH_EMAIL }}
+      TF_VAR_upstash_api_key: ${{ secrets.UPSTASH_API_KEY }}
+      TF_VAR_render_api_key: ${{ secrets.RENDER_API_KEY }}
+      TF_VAR_render_owner_id: ${{ secrets.RENDER_OWNER_ID }}
+      TF_VAR_neon_api_key: ${{ secrets.NEON_API_KEY }}
 
     steps:
       - uses: actions/checkout@v3
