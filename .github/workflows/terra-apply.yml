@@ -1,0 +1,62 @@
+# This template is pre-configured to create an applyable run in HCP Terraform.
+# If the plan phase is successful, the run will be applied for the specified workspace.
+#
+# This workflow is configured to trigger when a push against your `main` branch occurs,
+# **IF** the set paths contain files that have changed.
+#
+---
+name: HCP Terraform Apply Run
+
+on:
+  ####pull_request:
+  push:
+    branches:
+    ## RECOMMENDED: Change for your target branch, or include branches you wish to trigger this workflow file.
+      - main
+    ## RECOMMENDED: Specify to only run this workflow file when terraform configuration has changed.
+    #paths:
+    #  - "terraform/**.tf" ## Example: 'terraform/**.tf'
+
+## Add shared Environment Variables across jobs here ##
+env:
+  TF_CLOUD_ORGANIZATION: "${{ secrets.TF_CLOUD_ORGANIZATION }}" ## Name of your existing HCP Terraform Organization. RECOMMENDED: use repository variables. ex. "${{ vars.TF_CLOUD_ORGANIZATION }}"
+  TF_API_TOKEN: "${{ secrets.TERRAFORM_TOKEN }}" ## HCP Terraform API Token. RECOMMENDED: replace with github action secrets. ex. "${{ secrets.TF_API_TOKEN }}"
+  TF_WORKSPACE: "medusa" ## Name of your existing workspace in HCP Terraform.
+  CONFIG_DIRECTORY: "terraform" ## Directory of your Terraform Configuration. Relative to the project root.
+  ## Additional env variables
+  # TF_LOG: DEBUG ## Helpful for troubleshooting
+  # TF_MAX_TIMEOUT: "30m" ## If you wish to override the default "1h"
+
+
+jobs:
+  terraform-cloud-speculative-run:
+    runs-on: ubuntu-latest
+
+    env:
+      TF_VAR_upstash_email: '"${{secrets.UPSTASH_EMAIL}}"'
+      TF_VAR_upstash_api_key: '"${{secrets.UPSTASH_API_KEY}}"'
+      TF_VAR_render_api_key: '"${{secrets.RENDER_API_KEY}}"'
+      TF_VAR_render_owner_id: '"${{secrets.RENDER_OWNER_ID}}"'
+      TF_VAR_neon_api_key: '"${{secrets.NEON_API_KEY}}"'
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.3.0
+        id: upload
+        with:
+          workspace: ${{ env.TF_WORKSPACE }}
+          directory: ${{ env.CONFIG_DIRECTORY }}
+
+      - uses: hashicorp/tfc-workflows-github/actions/create-run@v1.3.0
+        id: create-run
+        with:
+          workspace: ${{ env.TF_WORKSPACE }}
+          configuration_version: ${{ steps.upload.outputs.configuration_version_id }}
+
+      - uses: hashicorp/tfc-workflows-github/actions/apply-run@v1.3.0
+        id: apply
+        if: ${{ fromJSON(steps.create-run.outputs.payload).data.attributes.actions.IsConfirmable }}
+        with:
+          run: ${{ steps.create-run.outputs.run_id }}
+          comment: "Apply Run from GitHub Actions CI ${{ github.sha }}"

@@ -9,14 +9,13 @@
 name: HCP Terraform Speculative Run
 
 on:
-  ####pull_request:
-  push:
+  pull_request:
     branches:
     ## RECOMMENDED: Change for your target branch, or include branches you wish to trigger this workflow file.
       - main
     ## RECOMMENDED: Specify to only run this workflow file when terraform configuration has changed.
-    #paths:
-    #  - "terraform/**.tf" ## Example: 'terraform/**.tf'
+    paths:
+      - "terraform/**.tf" ## Example: 'terraform/**.tf'
 
 ## Add shared Environment Variables across jobs here ##
 env:
@@ -32,14 +31,15 @@ env:
 jobs:
   terraform-cloud-speculative-run:
     runs-on: ubuntu-latest
-    ## OPTIONAL: can scope variables to this specific job
-    ## Example:
+
     env:
       TF_VAR_upstash_email: '"${{secrets.UPSTASH_EMAIL}}"'
       TF_VAR_upstash_api_key: '"${{secrets.UPSTASH_API_KEY}}"'
       TF_VAR_render_api_key: '"${{secrets.RENDER_API_KEY}}"'
       TF_VAR_render_owner_id: '"${{secrets.RENDER_OWNER_ID}}"'
       TF_VAR_neon_api_key: '"${{secrets.NEON_API_KEY}}"'
+      # except these variables secrets.GITHUB_TOKEN also needs to be defined
+      # check action adding github comment below
 
     steps:
       - uses: actions/checkout@v3
