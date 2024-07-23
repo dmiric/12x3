@@ -31,7 +31,7 @@ provider "render" {
 }
 
 provider "neon" {
-  token = var.neon_api_key
+  token = "$${var.neon_api_key}"
 }
 
 provider "random" {}
@@ -50,7 +50,7 @@ resource "upstash_redis_database" "redis" {
  }
 
 output "test" {
-  value = "${var.upstash_email}"
+  value = "$${var.upstash_email}"
 }
 
 #value = "redis://default:${upstash_redis_database.redis.password}${upstash_redis_database.redis.endpoint}:${upstash_redis_database.redis.port}"
