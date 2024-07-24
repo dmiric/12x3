@@ -43,48 +43,43 @@ provider "upstash" {
 
 ## REDIS
 
-resource "upstash_redis_database" "redis" {
-   database_name = "Medusa 1"
-   region = "eu-west-1"
-   tls = "true"
- }
-
-output "test" {
-  value = "${var.upstash_email}"
-}
-
+# resource "upstash_redis_database" "redis" {
+#    database_name = "Medusa 1"
+#    region = "eu-west-1"
+#    tls = "true"
+#  }
 #value = "redis://default:${upstash_redis_database.redis.password}${upstash_redis_database.redis.endpoint}:${upstash_redis_database.redis.port}"
 
-# ## DATABASE
+## DATABASE
 
-# resource "neon_project" "db" {
-#   name = "medusa 2"
-#   region_id = "aws-eu-central-1"
-# }
+resource "neon_project" "db" {
+  name = "medusa 2"
+  region_id = "aws-eu-central-1"
+}
 
-# resource "neon_endpoint" "db" {
-#   branch_id  = neon_project.db.branch.id
-#   project_id = neon_project.db.id
-# }
+resource "neon_endpoint" "db" {
+  branch_id  = neon_project.db.branch.id
+  project_id = neon_project.db.id
+}
 
-# resource "neon_branch" "db" {
-#   parent_id  = neon_project.db.branch.id
-#   project_id = neon_project.db.id
-#   name       = "main"
-# }
+resource "neon_branch" "db" {
+  parent_id  = neon_project.db.branch.id
+  project_id = neon_project.db.id
+  name       = "main"
+}
 
-# resource "neon_role" "db" {
-#   branch_id  = neon_project.db.branch.id
-#   project_id = neon_project.db.id
-#   name       = "owner"
-# }
+resource "neon_role" "db" {
+  branch_id  = neon_project.db.branch.id
+  project_id = neon_project.db.id
+  name       = "owner"
+}
 
-# resource "neon_database" "db" {
-#   owner_name = neon_role.db.name
-#   branch_id  = neon_project.db.branch.id
-#   project_id = neon_project.db.id
-#   name       = "db"
-# }
+resource "neon_database" "db" {
+  owner_name = neon_role.db.name
+  branch_id  = neon_project.db.branch.id
+  project_id = neon_project.db.id
+  name       = "db"
+}
 
 ### BACKEND DEPLOY
 

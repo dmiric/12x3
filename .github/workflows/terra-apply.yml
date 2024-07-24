@@ -48,29 +48,29 @@ jobs:
           workspace: ${{ env.TF_WORKSPACE }}
           directory: ${{ env.CONFIG_DIRECTORY }}
 
-      - uses: hashicorp/tfc-workflows-github/actions/create-run@v1.3.0
-        id: create-run-destroy
-        with:
-          workspace: ${{ env.TF_WORKSPACE }}
-          configuration_version: ${{ steps.upload.outputs.configuration_version_id }}
-          is_destroy: true
+    #   - uses: hashicorp/tfc-workflows-github/actions/create-run@v1.3.0
+    #     id: create-run-destroy
+    #     with:
+    #       workspace: ${{ env.TF_WORKSPACE }}
+    #       configuration_version: ${{ steps.upload.outputs.configuration_version_id }}
+    #       is_destroy: true
 
-      - uses: hashicorp/tfc-workflows-github/actions/apply-run@v1.3.0
-        id: apply-destroy
-        if: ${{ fromJSON(steps.create-run-destroy.outputs.payload).data.attributes.actions.IsConfirmable }}
-        with:
-          run: ${{ steps.create-run-destroy.outputs.run_id }}
-          comment: "Apply Run from GitHub Actions CI ${{ github.sha }}"
+    #   - uses: hashicorp/tfc-workflows-github/actions/apply-run@v1.3.0
+    #     id: destroy
+    #     if: ${{ fromJSON(steps.create-run-destroy.outputs.payload).data.attributes.actions.IsConfirmable }}
+    #     with:
+    #       run: ${{ steps.create-run-destroy.outputs.run_id }}
+    #       comment: "Apply Run from GitHub Actions CI ${{ github.sha }}"
 
       - uses: hashicorp/tfc-workflows-github/actions/create-run@v1.3.0
-        id: create-run
+        id: create-run-apply
         with:
           workspace: ${{ env.TF_WORKSPACE }}
           configuration_version: ${{ steps.upload.outputs.configuration_version_id }}
 
       - uses: hashicorp/tfc-workflows-github/actions/apply-run@v1.3.0
         id: apply
-        if: ${{ fromJSON(steps.create-run.outputs.payload).data.attributes.actions.IsConfirmable }}
+        if: ${{ fromJSON(steps.create-run-apply.outputs.payload).data.attributes.actions.IsConfirmable }}
         with:
-          run: ${{ steps.create-run.outputs.run_id }}
+          run: ${{ steps.create-run-apply.outputs.run_id }}
           comment: "Apply Run from GitHub Actions CI ${{ github.sha }}"
