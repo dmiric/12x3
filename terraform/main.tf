@@ -43,11 +43,11 @@ provider "upstash" {
 
 ## REDIS
 
-# resource "upstash_redis_database" "redis" {
-#    database_name = "Medusa 1"
-#    region = "eu-west-1"
-#    tls = "true"
-#  }
+resource "upstash_redis_database" "redis" {
+   database_name = "Medusa 1"
+   region = "eu-west-1"
+   tls = "true"
+ }
 #value = "redis://default:${upstash_redis_database.redis.password}${upstash_redis_database.redis.endpoint}:${upstash_redis_database.redis.port}"
 
 ## DATABASE
