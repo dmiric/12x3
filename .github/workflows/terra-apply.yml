@@ -49,6 +49,20 @@ jobs:
           directory: ${{ env.CONFIG_DIRECTORY }}
 
       - uses: hashicorp/tfc-workflows-github/actions/create-run@v1.3.0
+        id: create-run-destroy
+        with:
+          workspace: ${{ env.TF_WORKSPACE }}
+          configuration_version: ${{ steps.upload.outputs.configuration_version_id }}
+          is_destroy: true
+
+      - uses: hashicorp/tfc-workflows-github/actions/apply-run@v1.3.0
+        id: apply-destroy
+        if: ${{ fromJSON(steps.create-run-destroy.outputs.payload).data.attributes.actions.IsConfirmable }}
+        with:
+          run: ${{ steps.create-run-destroy.outputs.run_id }}
+          comment: "Apply Run from GitHub Actions CI ${{ github.sha }}"
+
+      - uses: hashicorp/tfc-workflows-github/actions/create-run@v1.3.0
         id: create-run
         with:
           workspace: ${{ env.TF_WORKSPACE }}
