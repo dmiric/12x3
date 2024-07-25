@@ -1,8 +1,7 @@
 terraform {
   required_providers {
     neon = {
-      source = "terraform-community-providers/neon"
-      version = "0.1.6"
+      source = "kislerdm/neon"
     }
 
     neosync = {
@@ -31,7 +30,7 @@ provider "render" {
 }
 
 provider "neon" {
-  token = var.neon_api_key
+  api_key = var.neon_api_key
 }
 
 provider "random" {}
@@ -52,34 +51,23 @@ resource "upstash_redis_database" "redis" {
 
 ## DATABASE
 
+# https://registry.terraform.io/providers/kislerdm/neon/latest/docs/resources/project
 resource "neon_project" "db" {
-  name = "medusa 2"
+  name = "medusa 3"
   region_id = "aws-eu-central-1"
+  branch {
+    name          = "main"
+    database_name = "medusa"
+    role_name     = "owner"
+  }
 }
 
-resource "neon_endpoint" "db" {
-  branch_id  = neon_project.db.branch.id
+# grant project access to the user with the email foo@bar.qux
+resource "neon_project_permission" "share" {
   project_id = neon_project.db.id
+  grantee    = var.upstash_email
 }
 
-resource "neon_branch" "db" {
-  parent_id  = neon_project.db.branch.id
-  project_id = neon_project.db.id
-  name       = "main"
-}
-
-resource "neon_role" "db" {
-  branch_id  = neon_project.db.branch.id
-  project_id = neon_project.db.id
-  name       = "owner"
-}
-
-resource "neon_database" "db" {
-  owner_name = neon_role.db.name
-  branch_id  = neon_project.db.branch.id
-  project_id = neon_project.db.id
-  name       = "db"
-}
 
 ### BACKEND DEPLOY
 
