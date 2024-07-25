@@ -41,16 +41,13 @@ provider "upstash" {
 }
 
 ## REDIS
-
 resource "upstash_redis_database" "redis" {
    database_name = "Medusa 1"
    region = "eu-west-1"
    tls = "true"
  }
-#value = "redis://default:${upstash_redis_database.redis.password}${upstash_redis_database.redis.endpoint}:${upstash_redis_database.redis.port}"
 
 ## DATABASE
-
 # https://registry.terraform.io/providers/kislerdm/neon/latest/docs/resources/project
 resource "neon_project" "db" {
   name = "medusa 3"
@@ -69,75 +66,78 @@ resource "neon_project_permission" "share" {
 }
 
 
-### BACKEND DEPLOY
+## BACKEND DEPLOY
 
-# resource "random_string" "JWT_SECRET" {
-#   length  = 32
-#   special = false
-#   upper   = true
-#   lower   = true
-#   numeric  = true
-# }
+resource "random_string" "JWT_SECRET" {
+  length  = 32
+  special = false
+  upper   = true
+  lower   = true
+  numeric  = true
+}
 
-# resource "random_string" "COOKIE_SECRET" {
-#   length  = 32
-#   special = false
-#   upper   = true
-#   lower   = true
-#   numeric  = true
-# }
+resource "random_string" "COOKIE_SECRET" {
+  length  = 32
+  special = false
+  upper   = true
+  lower   = true
+  numeric  = true
+}
 
-# output "random_string_value" {
-#   value = random_string.JWT_SECRET.result
-# }
+output "random_string_value" {
+  value = random_string.JWT_SECRET.result
+}
 
-# output "random_string_value2" {
-#   value = random_string.COOKIE_SECRET.result
-# }
+output "random_string_value2" {
+  value = random_string.COOKIE_SECRET.result
+}
 
-# resource "render_web_service" "web" {
-#   name               = "terraform-web-service"
-#   plan               = "starter"
-#   region             = "oregon"
-#   start_command      = "npm start"
-#   pre_deploy_command = "echo 'hello world'"
+resource "render_web_service" "web" {
+  name               = "terraform-web-service"
+  plan               = "starter"
+  region             = "oregon"
+  start_command      = "npm start"
+  pre_deploy_command = "echo 'hello world'"
 
-#   runtime_source = {
-#     native_runtime = {
-#       auto_deploy   = true
-#       branch        = "main"
-#       build_command = "npm install"
-#       build_filter = {
-#         paths         = ["src/**"]
-#         ignored_paths = ["tests/**"]
-#       }
-#       repo_url = "https://github.com/render-examples/express-hello-world"
-#       runtime  = "node"
-#     }
+  runtime_source = {
+    native_runtime = {
+      auto_deploy   = true
+      branch        = "main"
+      build_command = "npm install"
+      build_filter = {
+        paths         = ["src/**"]
+        ignored_paths = ["tests/**"]
+      }
+      repo_url = "https://github.com/render-examples/express-hello-world"
+      runtime  = "node"
+    }
+  }
+
+  disk = {
+    name       = "some-disk"
+    size_gb    = 1
+    mount_path = "/data"
+  }
+
+  env_vars = {
+    "JWT_SECRET" = { value = random_string.JWT_SECRET.result },
+    "COOKIE_SECRET" = { value = random_string.COOKIE_SECRET.result },
+    "REDIS_URL" = { value = "redis://default:${upstash_redis_database.redis.password}${upstash_redis_database.redis.endpoint}:${upstash_redis_database.redis.port}" }
+    "DB_URL" = { value = neon_project.db.connection_uri }
+    "DATABASE_TYPE" = { value= "postgres"}
+  }
+#   secret_files = {
+#     "file1" = { content = "content1" },
+#     "file2" = { content = "content2" },
 #   }
+#   custom_domains = [
+#     { name : "terraform-provider-1.db.com" },
+#     { name : "terraform-provider-2.db.com" },
+#   ]
 
-#   disk = {
-#     name       = "some-disk"
-#     size_gb    = 1
-#     mount_path = "/data"
+#   notification_override = {
+#     preview_notifications_enabled = "false"
+#     notifications_to_send         = "failure"
 #   }
-
-#   env_vars = {
-#     "JWT_SECRET" = { value = random_string.JWT_SECRET.result },
-#     "COOKIE_SECRET" = { value = random_string.COOKIE_SECRET.result },
-#   }
-# #   secret_files = {
-# #     "file1" = { content = "content1" },
-# #     "file2" = { content = "content2" },
-# #   }
-# #   custom_domains = [
-# #     { name : "terraform-provider-1.db.com" },
-# #     { name : "terraform-provider-2.db.com" },
-# #   ]
-
-# #   notification_override = {
-# #     preview_notifications_enabled = "false"
-# #     notifications_to_send         = "failure"
-# #   }
-# }
+}
 
