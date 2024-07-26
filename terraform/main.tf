@@ -108,7 +108,7 @@ resource "render_web_service" "web" {
         paths         = ["src/**"]
         ignored_paths = ["tests/**"]
       }
-      repo_url = "https://github.com/render-examples/express-hello-world"
+      repo_url = "https://github.com/dmiric/12x3"
       runtime  = "node"
     }
   }
