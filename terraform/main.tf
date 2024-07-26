@@ -122,7 +122,7 @@ resource "render_web_service" "web" {
   env_vars = {
     "JWT_SECRET" = { value = random_string.JWT_SECRET.result },
     "COOKIE_SECRET" = { value = random_string.COOKIE_SECRET.result },
-    "REDIS_URL" = { value = "redis://default:${upstash_redis_database.redis.password}${upstash_redis_database.redis.endpoint}:${upstash_redis_database.redis.port}" }
+    "REDIS_URL" = { value = "rediss://default:${upstash_redis_database.redis.password}@${upstash_redis_database.redis.endpoint}:${upstash_redis_database.redis.port}" }
     "DB_URL" = { value = neon_project.db.connection_uri }
     "DATABASE_TYPE" = { value= "postgres"}
   }
